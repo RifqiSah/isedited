@@ -1,11 +1,16 @@
 extends layout
 
 block content
+  .title
+    h1 Is Edited?
+    p You don't have to be fooled anymore by edited photos!
   .file-upload.result
-    if isedited
+    if isedited === true
       h1.no= "EDITED"
-    else
+    else if isedited === false
       h1.yes= "ORIGINAL"
+    else
+      h1.no= "ERROR :("
     p !{message}
     a(href='/', title='Check another image') Check another image
     hr

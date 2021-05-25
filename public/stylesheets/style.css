@@ -21,6 +21,23 @@ body {
   clear: both;
 }
 
+/**
+ * Content
+ */
+
+.title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.title h1 {
+  text-align: center;
+}
+
+.title p {
+  text-align: center;
+}
+
 .file-upload {
   background-color: #ffffff;
   width: 600px;
@@ -181,10 +198,12 @@ body {
 
 .result p {
   font-size: 15px;
+  padding-bottom: 20px;
 }
 
 .result hr {
-  margin: 30px 0;
+  border: 0;
+  margin: 15px 0 30px 0;
   border-top: 4px dashed #3572cd;
 }
 

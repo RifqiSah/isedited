@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  .title
+    h1 Is Edited?
+    p You don't have to be fooled anymore by edited photos!
   form(action='/upload', method='post', enctype='multipart/form-data')
     .file-upload
       button.file-upload-btn(type='button', onclick='$(".file-upload-input").trigger("click")') Select Image
@@ -9,8 +12,10 @@ block content
         .drag-text
           h3 Drag and drop an image or click Select Image
       .file-upload-preview
-        span.file-upload-filename
-        img.file-upload-image(src='#', alt='Uploaded image')
+        .row
+          span.file-upload-filename
+        .row
+          img.file-upload-image(src='#', alt='Uploaded image')
         .row
           .column.file-upload-process
             button.process-image(type='submit', name='submit')

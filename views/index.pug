@@ -1,8 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
   form(action='/upload', method='post', enctype='multipart/form-data')
-    input(type='file', name='image')
-    input(type='submit', name='submit', value='Upload Image')
+    .file-upload
+      button.file-upload-btn(type='button', onclick='$(".file-upload-input").trigger("click")') Select Image
+      .file-upload-placeholder
+        input.file-upload-input(type='file', onchange='readURL(this);', accept='image/*', name='image')
+        .drag-text
+          h3 Drag and drop an image or click Select Image
+      .file-upload-preview
+        span.file-upload-filename
+        img.file-upload-image(src='#', alt='Uploaded image')
+        .row
+          .column.file-upload-process
+            button.process-image(type='submit', name='submit')
+              span Process Image
+          .column.file-upload-remove
+            button.remove-image(type='button', onclick='removeUpload()')
+              span.image-title Remove Image

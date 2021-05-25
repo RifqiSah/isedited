@@ -1,6 +1,13 @@
 extends layout
 
 block content
-  h1= content
-  p= message
-  pre= data
+  .file-upload.result
+    if isedited
+      h1.no= "EDITED"
+    else
+      h1.yes= "ORIGINAL"
+    p !{message}
+    a(href='/', title='Check another image') Check another image
+    hr
+    //- pre Log data:
+    //- pre= data

@@ -4,13 +4,10 @@ const router = express.Router();
 const path = require('path');
 const { unlinkSync } = require('fs');
 
-const { check } = require('../helpers/exif');
+const { get, check } = require('../helpers/exif');
 const { random } = require('../helpers/helper');
 
-const cameraData = require('../data/camera.json');
-const softwareData = require('../data/software.json');
-
-const multer  = require('multer')
+const multer  = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/images/uploads/');
@@ -24,27 +21,34 @@ const upload = multer({ storage: storage });
 
 router.post('/', upload.single('image'), async (req, res, next) => {
   const resp = {
-    content: "Berhasil upload!",
+    isedited: null,
     message: "",
-    data: "",
+    data: {},
   };
 
-  const imagePath = path.join(__dirname, `../${req.file.path}`);
-  const imageCheck = await check(imagePath).catch((err) => {
+  try {
+    // get exif data
+    const imagePath = path.join(__dirname, `../${req.file.path}`);
+    const imageMeta = await get(imagePath);
+
+    unlinkSync(imagePath);
+
+    resp.data = imageMeta.data;
+
+    // check image
+    const checker = check(imageMeta.data);
+    resp.isedited = checker.edited;
+    resp.message = checker.message;
+  }
+  catch (err) {
     console.error(err);
-  });
 
-  unlinkSync(imagePath);
-
-  if (!imageCheck) {
-    resp.message = 'an error occured!';
+    resp.isedited = false;
+    resp.message = "An error occured!";
+    res.data = err;
   }
 
-  if (!imageCheck.success) {
-    resp.message = imageCheck.message;
-  }
-
-  resp.data = JSON.stringify(imageCheck.data, null, 4);
+  resp.data = JSON.stringify(resp.data, null, 4);
 
   res.render('result', resp);
 });

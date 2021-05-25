@@ -26,27 +26,28 @@ router.post('/', upload.single('image'), async (req, res, next) => {
     data: {},
   };
 
+  const imagePath = path.join(__dirname, `../${req.file.path}`);
+
   try {
     // get exif data
-    const imagePath = path.join(__dirname, `../${req.file.path}`);
     const imageMeta = await get(imagePath);
-
-    unlinkSync(imagePath);
 
     resp.data = imageMeta.data;
 
     // check image
     const checker = check(imageMeta.data);
+
     resp.isedited = checker.edited;
     resp.message = checker.message;
   }
   catch (err) {
     console.error(err);
 
-    resp.isedited = false;
-    resp.message = "An error occured!";
+    resp.message = err.message;
     res.data = err;
   }
+
+  unlinkSync(imagePath);
 
   resp.data = JSON.stringify(resp.data, null, 4);
 

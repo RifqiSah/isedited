@@ -14,6 +14,8 @@ function readURL(input) {
 
       if (filesize > 5242880) {
         $('.file-upload-filename').html("Maximum file size is 5MB !");
+        $('.try').show();
+
         $('.file-upload-image').remove();
         $('.file-upload-process').remove();
         $('.file-upload-remove').remove();

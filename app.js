@@ -38,9 +38,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// module.exports = app;
+module.exports = app;
 
-let port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running at port ${port}!`);
-});
+// let port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//   console.log(`Server running at port ${port}!`);
+// });
